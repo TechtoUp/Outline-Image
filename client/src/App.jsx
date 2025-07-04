@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import ImageUpload from './components/ImageUpload';
 
 function App() {
   const [message, setMessage] = useState('')
@@ -12,9 +13,10 @@ function App() {
   }, []);
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1 className="text-2xl font-bold mb-4">AI Background Remover App</h1>
-      <p className="mb-2">Backend says: <b>{message || 'Loading...'}</b></p>
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10 px-4">
+      <h1 className="text-3xl font-bold mb-6 text-center">AI Background Remover</h1>
+      <p className="mb-6 text-gray-700">Backend says: <b>{message || 'Loading...'}</b></p>
+      <ImageUpload />
     </div>
   )
 }
