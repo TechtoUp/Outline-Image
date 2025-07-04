@@ -3,6 +3,7 @@ import { useState, useRef } from 'react';
 const ImageUpload = () => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [result, setResult] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const inputRef = useRef(null);
 
@@ -54,8 +55,8 @@ const ImageUpload = () => {
         body: formData,
       });
       if (!res.ok) throw new Error('Upload failed');
-      // @todo: handle response once backend implemented
-      alert('Image uploaded successfully');
+      const data = await res.json();
+      setResult(data.cutout || data.filePath);
     } catch (err) {
       console.error(err);
       alert('Error uploading image');
@@ -99,6 +100,19 @@ const ImageUpload = () => {
         >
           Upload & Remove Background
         </button>
+      )}
+      {result && (
+        <div className="mt-6 text-center">
+          <h3 className="mb-2 font-semibold">Cutout Preview</h3>
+          <img src={result} alt="Cutout" className="max-h-64 mx-auto object-contain border" />
+          <a
+            href={result}
+            download
+            className="inline-block mt-2 text-blue-600 underline"
+          >
+            Download PNG
+          </a>
+        </div>
       )}
     </div>
   );
